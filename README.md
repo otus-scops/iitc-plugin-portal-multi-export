@@ -8,6 +8,11 @@ As formats we currently got: GPX, CSV and export for Maxfield
 
 (check out http://www.ingress-maxfield.com/ for information about Maxfield)
 
+## Update
+0.12 draw Support for drawing circles
+0.13 Changed csv output content to be equivalent to tsv and added escaping in ExcelCSV format.
+     Added dynamic link output.
+
 ## Requirements
 IITC needs to be installed. See this page for information: http://iitc.jonatkins.com/
 

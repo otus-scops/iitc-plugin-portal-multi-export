@@ -2,7 +2,7 @@
 // @id              iitc-plugin-portal-multi-export
 // @name            IITC plugin: Portal Multi Export
 // @category        Misc
-// @version         0.12.0.20250520
+// @version         0.12.0.202505201000
 // @namespace       https://github.com/jonatkins/ingress-intel-total-conversion
 // @updateURL       https://github.com/otus-scops/iitc-plugin-portal-multi-export/raw/refs/heads/master/multi_export.user.js
 // @downloadURL     https://github.com/otus-scops/iitc-plugin-portal-multi-export/raw/refs/heads/master/multi_export.user.js
@@ -88,7 +88,6 @@ function wrapper(plugin_info) {
 
     window.plugin.multiexport.portalincircle = function(portal, LatLngs, radius)
     {
-        console.log(portal, L.CRS.Earth.distance(portal, LatLngs), radius);
         return (L.CRS.Earth.distance(portal, LatLngs)<radius)
     };
 
@@ -110,7 +109,6 @@ function wrapper(plugin_info) {
     /*********** ABSTRACT EXPORT FUNCTION ******************************************/
     window.plugin.multiexport.export = function(type, source, bkmrkFolder)
     {
-        console.log(type);
         var o = [];
         var portals;
         var sourceTitle;
@@ -177,7 +175,6 @@ function wrapper(plugin_info) {
                             }
                         }
                         if(drawLayer[dl].type === 'circle'){
-                            console.log("type circle detected!", p, latlng, drawLayer[dl]);
                             if(window.plugin.multiexport.portalincircle(p._latlng, drawLayer[dl].latLng, drawLayer[dl].radius)){
                                 portalInPolygon = true;
                                 break;

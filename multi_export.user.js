@@ -2,7 +2,7 @@
 // @id              iitc-plugin-portal-multi-export
 // @name            IITC plugin: Portal Multi Export
 // @category        Misc
-// @version         0.12.0.202505201000
+// @version         0.13.0.202505201100
 // @namespace       https://github.com/jonatkins/ingress-intel-total-conversion
 // @updateURL       https://github.com/otus-scops/iitc-plugin-portal-multi-export/raw/refs/heads/master/multi_export.user.js
 // @downloadURL     https://github.com/otus-scops/iitc-plugin-portal-multi-export/raw/refs/heads/master/multi_export.user.js
@@ -90,6 +90,10 @@ function wrapper(plugin_info) {
     {
         return (L.CRS.Earth.distance(portal, LatLngs)<radius)
     };
+
+    window.plugin.multiexport.toCsvLine = function(data){
+        return data.map(datum => datum.includes(',') ? `"${datum.replaceAll('"', '""')}"` : datum).join(',');
+    }
 
     /*********** BOOKMARK MENUE ****************************************************/
     window.plugin.multiexport.bkmrkmenu = function(type) {
@@ -198,18 +202,18 @@ function wrapper(plugin_info) {
 
             var iitcLink = "https://intel.ingress.com/intel?ll=" + latlng + "&z=16&pll=" + latlng;
             var gmapLink = "https://google.com/maps/place/" + latlng;
-
+            var dynamicLink = `https://link.ingress.com/?link=https://intel.ingress.com/portal/${guid}&apn=com.nianticproject.ingress&isi=576505181&ibi=com.google.ingress&ifl=https://apps.apple.com/app/ingress/id576505181&ofl=https://intel.ingress.com/intel?pll=${lat},${lng}`;
+console.log(dynamicLink);
             switch(type){
                 case 'MF':
                     o.push(name + ";" + iitcLink + ";" + keys);
                 break;
                 case 'CSV':
-                    o.push(guid + "," + JSON.stringify(name) + "," + lat + "," + lng
-                          );
+                    o.push(window.plugin.multiexport.toCsvLine([guid, JSON.stringify(name), lat, lng, iitcLink, gmapLink, dynamicLink, pimage]));
                 break;
                 case 'TSV':
                     o.push(guid + "\t" + JSON.stringify(name) + "\t" + lat + "\t" + lng
-                            + "\t" + iitcLink + "\t" + gmapLink + "\t" + pimage
+                            + "\t" + iitcLink + "\t" + gmapLink + "\t" + dynamicLink + "\t" + pimage
                            );
                 break;
                 case 'GPX':
@@ -218,6 +222,7 @@ function wrapper(plugin_info) {
                            +"\n<desc>\n" +
                              + "Intel Link: " + iitcLink + "\n"
                              + "GMap: " + gmapLink + "\n"
+                             + "dynamicLink: " + dynamicLink + "\n"
                              + "guid: " + guid + "\n"
                              + "image: " + pimage + "\n"
                            +"</desc>\n"
@@ -230,7 +235,7 @@ function wrapper(plugin_info) {
                                 title: name,
                                 coordinates: {lat: lat,
                                               lng: lng},
-                                link: { intel: iitcLink, gmap: gmapLink },
+                                link: { intel: iitcLink, gmap: gmapLink, dynamiclink: dynamicLink },
                                 image: pimage
                               };
                     o.push(JSON.stringify(obj) + ",");

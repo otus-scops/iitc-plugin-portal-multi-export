@@ -10,8 +10,8 @@ As formats we currently got: GPX, CSV and export for Maxfield
 
 ## Update
 0.12 draw Support for drawing circles
-0.13 Changed csv output content to be equivalent to tsv and added escaping in ExcelCSV format.
-     Added dynamic link output.
+
+0.13 Added dynamic links to output content. Changed csv output content to be equivalent to tsv and added escaping in ExcelCSV format.
 
 ## Requirements
 IITC needs to be installed. See this page for information: http://iitc.jonatkins.com/

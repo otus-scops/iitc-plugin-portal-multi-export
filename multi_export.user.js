@@ -2,10 +2,10 @@
 // @id              iitc-plugin-portal-multi-export
 // @name            IITC plugin: Portal Multi Export
 // @category        Misc
-// @version         0.11
+// @version         0.12.0.20250520
 // @namespace       https://github.com/jonatkins/ingress-intel-total-conversion
-// @updateURL       https://iitc.aradiv.de/plugin/37/multi_export.meta.js
-// @downloadURL     https://iitc.aradiv.de/plugin/37/multi_export.user.js
+// @updateURL       https://github.com/otus-scops/iitc-plugin-portal-multi-export/raw/refs/heads/master/multi_export.user.js
+// @downloadURL     https://github.com/otus-scops/iitc-plugin-portal-multi-export/raw/refs/heads/master/multi_export.user.js
 // @description     Export portals from bookmarks, current view or polygon
 // @include         http*://*intel.ingress.com/*
 // @match           http*://*intel.ingress.com/*
@@ -83,6 +83,13 @@ function wrapper(plugin_info) {
         }
 
         return inside;
+    };
+
+
+    window.plugin.multiexport.portalincircle = function(portal, LatLngs, radius)
+    {
+        console.log(portal, L.CRS.Earth.distance(portal, LatLngs), radius);
+        return (L.CRS.Earth.distance(portal, LatLngs)<radius)
     };
 
     /*********** BOOKMARK MENUE ****************************************************/
@@ -165,6 +172,13 @@ function wrapper(plugin_info) {
                     for(var dl in drawLayer){
                         if(drawLayer[dl].type === 'polygon'){
                             if(window.plugin.multiexport.portalinpolygon(latlng,drawLayer[dl].latLngs)){
+                                portalInPolygon = true;
+                                break;
+                            }
+                        }
+                        if(drawLayer[dl].type === 'circle'){
+                            console.log("type circle detected!", p, latlng, drawLayer[dl]);
+                            if(window.plugin.multiexport.portalincircle(p._latlng, drawLayer[dl].latLng, drawLayer[dl].radius)){
                                 portalInPolygon = true;
                                 break;
                             }

@@ -14,7 +14,7 @@ As formats we currently got: GPX, CSV and export for Maxfield
 0.13 Added dynamic links to output content. Changed csv output content to be equivalent to tsv and added escaping in ExcelCSV format.
 
 ## Requirements
-IITC needs to be installed. See this page for information: http://iitc.jonatkins.com/
+IITC needs to be installed. See this page for information: https://iitc.app/
 
 Additionally the "Bookmarks for maps and portals" and "Keys" plugin are needed for full functionality but the plugin also runs without them
 
